@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>PATROLscroller Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e7ebf0; --surface:#ffffff; --ink:#141a22; --muted:#596476; --line:#d2d9e1;
+  --assc:#2450a6; --cp:#1d7552; --cct:#a03825; --mvl:#6b3fa0; --cde:#00707a; --crt:#7a5b12; --cs:#a1306b; --crp:#3d6b1f; --ori:#4a5563; --cap:#8a4b00; --ci:#3b4fb8; --cri:#007a5e; --dp:#5a4a78; --dv:#b0244f; --crw:#5f6b00; --hc:#9c2a1c; --fn:#2d6a8a; --eps:#6d4c1f; --fa:#3a3a3a; --fr:#c0392b; --exp:#b35c00; --mp:#1f6f8b; --hs:#4b5d23; --jv:#8e3b8e; --ht:#a3341f; --ii:#2f4f9e; --dr:#5c6670; --prc:#7a5200; --pc:#8a1f3d; --ohw:#2e7d4f; --pt:#34495e; --rd:#7b1f1f; --tc:#3d3d8f; --sa:#7a2e5c; --rcv:#2a7a7a; --tp:#555b2a; --tle:#1f5f99; --tci:#996b1f; --hot:#b3261e; --saved:#9a6a00;
+  --right:#1d7552; --right-bg:#e2f3ea; --wrong:#b3261e; --wrong-bg:#fbe5e3;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1319; --surface:#171f29; --ink:#e7ecf2; --muted:#97a3b4; --line:#283442;
+    --assc:#86a8f2; --cp:#5fc797; --cct:#f2907a; --mvl:#bb9cf2; --cde:#5cc9d2; --crt:#e0bd6a; --cs:#f08cc0; --crp:#9fd27a; --ori:#aeb8c6; --cap:#f0a65c; --ci:#9eacf5; --cri:#56d1ae; --dp:#c2b2e6; --dv:#f58aa8; --crw:#c9d45a; --hc:#f2937f; --fn:#86c3e3; --eps:#d9b27a; --fa:#c8c8c8; --fr:#ff9a8f; --exp:#ffb366; --mp:#7fc9e3; --hs:#b8cf7a; --jv:#e3a1e3; --ht:#f4a08e; --ii:#9fb5f2; --dr:#b6c0c9; --prc:#e0b866; --pc:#f08fae; --ohw:#7fd6a3; --pt:#a9bccf; --rd:#f29b9b; --tc:#a8a8f0; --sa:#e8a0cc; --rcv:#7fd9d9; --tp:#c4cc80; --tle:#8fc3f2; --tci:#e6c27a; --hot:#ff8a80; --saved:#e8b64a;
+    --right:#5fc797; --right-bg:#123326; --wrong:#ff8a80; --wrong-bg:#3a1a19;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1319; --surface:#171f29; --ink:#e7ecf2; --muted:#97a3b4; --line:#283442;
+  --assc:#86a8f2; --cp:#5fc797; --cct:#f2907a; --mvl:#bb9cf2; --cde:#5cc9d2; --crt:#e0bd6a; --cs:#f08cc0; --crp:#9fd27a; --ori:#aeb8c6; --cap:#f0a65c; --ci:#9eacf5; --cri:#56d1ae; --dp:#c2b2e6; --dv:#f58aa8; --crw:#c9d45a; --hc:#f2937f; --fn:#86c3e3; --eps:#d9b27a; --fa:#c8c8c8; --fr:#ff9a8f; --exp:#ffb366; --mp:#7fc9e3; --hs:#b8cf7a; --jv:#e3a1e3; --ht:#f4a08e; --ii:#9fb5f2; --dr:#b6c0c9; --prc:#e0b866; --pc:#f08fae; --ohw:#7fd6a3; --pt:#a9bccf; --rd:#f29b9b; --tc:#a8a8f0; --sa:#e8a0cc; --rcv:#7fd9d9; --tp:#c4cc80; --tle:#8fc3f2; --tci:#e6c27a; --hot:#ff8a80; --saved:#e8b64a;
+  --right:#5fc797; --right-bg:#123326; --wrong:#ff8a80; --wrong-bg:#3a1a19;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--assc);outline-offset:2px}
+.wrap{max-width:52rem;margin:0 auto;padding:1.25rem 1rem 7rem}
+h1{font:700 2.6rem/1 "Barlow Condensed","Arial Narrow",sans-serif;margin:.3rem 0 .4rem}
+h1 span{font-size:.9rem;letter-spacing:.16em;vertical-align:middle;margin-left:.4rem;padding:.15rem .45rem;border-radius:4px;background:var(--ink);color:var(--surface)}
+h2{font:700 1.5rem/1.05 "Barlow Condensed","Arial Narrow",sans-serif;margin:0 0 .5rem}
+.muted{color:var(--muted)} .small{font-size:.88rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.1rem;margin:0 0 1rem}
+label.f{display:block;font-weight:600;font-size:.9rem;margin:.6rem 0 .3rem}
+input[type=text],input[type=password]{width:100%;padding:.62rem .75rem;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+.row{display:flex;gap:.6rem;flex-wrap:wrap}.row>*{flex:1 1 10rem}
+.btn{cursor:pointer;border-radius:999px;padding:.6rem 1.15rem;border:1.5px solid var(--line);background:transparent;font-weight:700}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.btn:disabled{opacity:.45;cursor:default}
+.actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.9rem}
+.msg{min-height:1.4em;margin:.5rem 0 0;font-weight:600;font-size:.92rem}
+.msg.ok{color:var(--right)} .msg.no{color:var(--wrong)}
+details summary{cursor:pointer;font-weight:700}
+ol.how{padding-left:1.2rem;margin:.5rem 0} ol.how li{margin:.25rem 0}
+/* lesson list */
+.lessons{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.ls{display:grid;grid-template-columns:auto 1fr auto;gap:.35rem .8rem;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--lc);border-radius:12px;padding:.6rem .8rem}
+.ls .nm{font-weight:700;line-height:1.25}
+.ls .st{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.st.open{color:var(--right)} .st.date{color:var(--assc)} .st.off{color:var(--muted)}
+.ls .dt{grid-column:2/4;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.88rem;color:var(--muted)}
+.ls input[type=date]{padding:.3rem .45rem;border:1.5px solid var(--line);border-radius:8px;background:var(--bg)}
+.ls .clr{all:unset;cursor:pointer;color:var(--assc);font-weight:600;font-size:.85rem}
+.sw{position:relative;width:3.1rem;height:1.8rem;flex:none}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.sw i{position:absolute;inset:0;border-radius:999px;background:var(--line);transition:background .2s}
+.sw i::after{content:"";position:absolute;top:.2rem;left:.2rem;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.sw input:checked+i{background:var(--right)} .sw input:checked+i::after{transform:translateX(1.3rem)}
+.sw input:focus-visible+i{outline:3px solid var(--assc);outline-offset:2px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:.7rem 1rem calc(.7rem + env(safe-area-inset-bottom,0))}
+.bar .in{max-width:52rem;margin:0 auto;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.bar .msg{margin:0;flex:1 1 12rem}
+.count{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>PATROLscroller <span>ADMIN</span></h1>
+
+  <section class="panel" id="login">
+    <h2>Sign in</h2>
+    <p class="muted small">This page is for instructors. Students never need it.</p>
+    <label class="f" for="apw">Admin password</label>
+    <input type="password" id="apw" autocomplete="current-password">
+    <div class="actions"><button class="btn primary" id="go">Open admin</button></div>
+    <p class="msg no" id="lmsg" role="alert"></p>
+  </section>
+
+  <div id="app" hidden>
+    <section class="panel" id="ghpanel">
+      <h2>GitHub connection</h2>
+      <p class="muted small" id="ghstate"></p>
+      <div class="row">
+        <div><label class="f" for="owner">Account</label><input type="text" id="owner" value="ypdlong"></div>
+        <div><label class="f" for="repo">Repository</label><input type="text" id="repo" value="BLET2026"></div>
+        <div><label class="f" for="branch">Branch</label><input type="text" id="branch" value="main"></div>
+      </div>
+      <label class="f" for="tok">GitHub access key (token)</label>
+      <input type="password" id="tok" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+      <div class="actions"><button class="btn" id="test">Save key and test</button><button class="btn" id="forget">Forget key on this device</button></div>
+      <p class="msg" id="gmsg" role="status"></p>
+      <details><summary>How to get a key (one time, about 3 minutes)</summary>
+        <ol class="how small">
+          <li>Sign in to GitHub and open <b>github.com/settings/personal-access-tokens/new</b>.</li>
+          <li>Name it something like “PATROLscroller admin” and pick an expiration (one year is fine).</li>
+          <li>Under <b>Repository access</b>, choose <b>Only select repositories</b> and pick <b>BLET2026</b>.</li>
+          <li>Under <b>Permissions → Repository permissions</b>, set <b>Contents</b> to <b>Read and write</b>.</li>
+          <li>Click <b>Generate token</b>, copy it, and paste it above.</li>
+        </ol>
+        <p class="muted small">The key is stored on this device only, locked with your admin password. Anyone with the key can change your site, so don’t share it.</p>
+      </details>
+    </section>
+
+    <section class="panel">
+      <h2>Lessons <span class="muted small count" id="summary"></span></h2>
+      <p class="muted small">Switch a lesson on to open it now, or set a date for it to open by itself that morning. Students see changes a few minutes after you save.</p>
+      <div class="actions">
+        <button class="btn" id="allon">All on</button><button class="btn" id="alloff">All off</button><button class="btn" id="newclass">Start new class</button>
+      </div>
+      <p class="muted small">A lesson that’s switched on is fully unlocked. A lesson with a future date stays hidden in the app until that date, but its key is in the settings file early, so a determined, tech-savvy student could open it ahead of time. For a hard lock, leave the date blank and switch it on when you get there.</p>
+    </section>
+    <ul class="lessons" id="list"></ul>
+
+    <section class="panel" style="margin-top:1rem">
+      <h2>Student password</h2>
+      <p class="muted small">This is the password students type to open PATROLscroller and the games. Changing it takes effect right away. Students who saved the old one will be asked for the new one the next time they open the app.</p>
+      <div class="row">
+        <div><label class="f" for="sp1">New student password</label><input type="text" id="sp1" autocomplete="off" spellcheck="false"></div>
+        <div><label class="f" for="sp2">Type it again</label><input type="text" id="sp2" autocomplete="off" spellcheck="false"></div>
+      </div>
+      <div class="actions"><button class="btn" id="chsp">Change student password</button></div>
+      <p class="msg" id="spmsg" role="status"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Change admin password</h2>
+      <div class="row">
+        <div><label class="f" for="np1">New password</label><input type="password" id="np1" autocomplete="new-password"></div>
+        <div><label class="f" for="np2">Type it again</label><input type="password" id="np2" autocomplete="new-password"></div>
+      </div>
+      <div class="actions"><button class="btn" id="chpw">Change password</button></div>
+      <p class="msg" id="pmsg" role="status"></p>
+    </section>
+  </div>
+</main>
+<div class="bar" id="bar" hidden><div class="in">
+  <p class="msg" id="smsg" role="status">No changes.</p>
+  <button class="btn primary" id="save" disabled>Save to site</button>
+</div></div>
+
+<script>
+const NAMES={"assc": "Arrest, Search, Seizure & Constitutional Law", "cp": "Civil Process", "cct": "Compliance & Control Tactics", "mvl": "Motor Vehicle Law", "cde": "Communication & De-Escalation", "crt": "Courtroom Security", "cs": "Controlled Substances", "crp": "Crime Prevention", "ori": "Course Orientation", "cap": "Crimes Against the Public", "ci": "Criminal Investigations", "cri": "Crisis Intervention", "dp": "Deceased Persons", "dv": "Domestic Violence Response", "crw": "Crowd Management", "hc": "Hate Crimes", "fn": "Field Notes & Report Writing", "eps": "Ethical Problem Solving", "fa": "Firearms", "fr": "First Responder", "exp": "Explosives & Hazardous Materials", "mp": "Missing Persons", "hs": "Homeland Security", "jv": "Juvenile Laws & Procedures", "ht": "Human Trafficking", "ii": "Interviews & Interrogations", "dr": "Law Enforcement Driver Training", "prc": "Property Crimes", "pc": "Person Crimes", "ohw": "Officer Health & Wellness", "pt": "Patrol Techniques", "rd": "Rapid Deployment", "tc": "Testifying in Court", "sa": "Sexual Assaults", "rcv": "Responding to Crime Victims", "tp": "Transporting & Processing Arrestees", "tle": "Traffic Law Enforcement", "tci": "Traffic Crash Investigation"};
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const enc=new TextEncoder(), dec=new TextDecoder();
+const b64=u=>btoa(String.fromCharCode(...new Uint8Array(u)));
+const ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const utf8b64=s=>{const u=enc.encode(s);let b="";for(let i=0;i<u.length;i+=0x8000)b+=String.fromCharCode(...u.subarray(i,i+0x8000));return btoa(b);};
+const b64utf8=s=>dec.decode(ub(s.replace(/\s/g,"")));
+const TOKKEY="patrolscroller-admin-token", CONN="patrolscroller-admin-repo";
+let KEYS=null, AKEY=null, VAULT=null, VDATA=null, state={}, saved="", shas={};
+const ORDER=Object.keys(NAMES).sort((a,b)=>a==="ori"?-1:b==="ori"?1:NAMES[a].localeCompare(NAMES[b]));
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
+const fmt=iso=>{const p=iso.split("-").map(Number);return new Date(p[0],p[1]-1,p[2]).toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});};
+
+async function derive(pw,salt,n){ const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:n,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]); }
+async function seal(key,text){ const iv=crypto.getRandomValues(new Uint8Array(12)); const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,enc.encode(text)); return {i:b64(iv),c:b64(ct)}; }
+async function unseal(key,o){ return dec.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:ub(o.i)},key,ub(o.c))); }
+
+/* ---- GitHub ---- */
+const conn=()=>({owner:$("#owner").value.trim(),repo:$("#repo").value.trim(),branch:$("#branch").value.trim()||"main"});
+let TOKEN="";
+async function gh(path,opts){
+  const c=conn(); const url="https://api.github.com/repos/"+encodeURIComponent(c.owner)+"/"+encodeURIComponent(c.repo)+"/contents/"+path+(opts&&opts.method==="PUT"?"":"?ref="+encodeURIComponent(c.branch));
+  const r=await fetch(url,Object.assign({headers:{"Authorization":"Bearer "+TOKEN,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"}},opts||{}));
+  if(!r.ok){ const t=await r.text(); throw new Error(r.status===401?"GitHub didn’t accept the key. Check it and try again.":r.status===403?"The key doesn’t have permission to change this repository. It needs Contents: Read and write.":r.status===404?"GitHub couldn’t find that account, repository or file. Check the names above.":"GitHub said "+r.status+": "+t.slice(0,140)); }
+  return r.json();
+}
+async function ghGet(path){ const j=await gh(path); shas[path]=j.sha; return b64utf8(j.content); }
+async function ghPut(path,text,msg){ const c=conn(); const body={message:msg,content:utf8b64(text),branch:c.branch}; if(shas[path]) body.sha=shas[path];
+  const j=await gh(path,{method:"PUT",body:JSON.stringify(body)}); shas[path]=j.content.sha; return j; }
+
+/* ---- sign in ---- */
+async function login(){
+  const pw=$("#apw").value; $("#lmsg").textContent=""; $("#go").disabled=true; $("#go").textContent="Opening…";
+  try{
+    VAULT=await (await fetch("admin-vault.json?t="+Date.now(),{cache:"no-store"})).json();
+    AKEY=await derive(pw,ub(VAULT.s),VAULT.n);
+    VDATA=JSON.parse(await unseal(AKEY,{i:VAULT.i,c:VAULT.c})); KEYS=VDATA.keys;
+  }catch(e){ $("#go").disabled=false; $("#go").textContent="Open admin"; $("#lmsg").textContent=VAULT?"That password didn’t work.":"Couldn’t load the admin file. Make sure admin-vault.json is on your site."; return; }
+  try{ const cc=JSON.parse(localStorage.getItem(CONN)||"null"); if(cc){ $("#owner").value=cc.owner; $("#repo").value=cc.repo; $("#branch").value=cc.branch; } }catch(e){}
+  try{ const t=JSON.parse(localStorage.getItem(TOKKEY)||"null"); if(t){ TOKEN=await unseal(AKEY,t); } }catch(e){ TOKEN=""; }
+  $("#login").hidden=true; $("#app").hidden=false; $("#bar").hidden=false;
+  ghState(); await loadSettings(); draw();
+}
+function ghState(){ $("#ghstate").textContent=TOKEN?"Key saved on this device. Saving goes straight to your site.":"No key on this device yet. Add one below to save changes to your site."; $("#tok").value=""; $("#tok").placeholder=TOKEN?"•••••••• (saved)":"github_pat_…"; }
+
+/* ---- settings ---- */
+async function loadSettings(){
+  let cfg=null;
+  if(TOKEN){ try{ cfg=JSON.parse(await ghGet("lessons.json")); }catch(e){ $("#gmsg").className="msg no"; $("#gmsg").textContent=e.message; } }
+  if(!cfg){ try{ cfg=await (await fetch("lessons.json?t="+Date.now(),{cache:"no-store"})).json(); }catch(e){ cfg={lessons:{}}; } }
+  state={}; ORDER.forEach(k=>{ const s=(cfg.lessons||{})[k]||{}; state[k]={on:!!(s.on&&s.k),opens:s.opens||""}; });
+  saved=JSON.stringify(state); dirty();
+}
+function build(){
+  const out={v:1,updated:new Date().toISOString(),lessons:{}};
+  ORDER.forEach(k=>{ const s=state[k]; out.lessons[k]=s.on?{on:true,k:KEYS[k]}:s.opens?{opens:s.opens,k:KEYS[k]}:{}; });
+  return JSON.stringify(out,null,1);
+}
+function status(k){ const s=state[k]; if(s.on) return ["open","Open"]; if(s.opens) return s.opens<=today()?["open","Open (date passed)"]:["date","Opens "+fmt(s.opens)]; return ["off","Off"]; }
+function draw(){
+  const ul=$("#list"); ul.innerHTML="";
+  ORDER.forEach(k=>{
+    const s=state[k], li=document.createElement("li"); li.className="ls"; li.style.setProperty("--lc","var(--"+k+")");
+    const sw=document.createElement("label"); sw.className="sw"; const cb=document.createElement("input"); cb.type="checkbox"; cb.checked=s.on; cb.setAttribute("aria-label",NAMES[k]+": open now"); sw.append(cb,document.createElement("i"));
+    cb.onchange=()=>{ s.on=cb.checked; dirty(); upd(); };
+    const nm=document.createElement("span"); nm.className="nm"; nm.textContent=NAMES[k];
+    const st=document.createElement("span"); st.className="st";
+    const dt=document.createElement("div"); dt.className="dt";
+    const lab=document.createElement("label"); lab.textContent="Opens on"; const di=document.createElement("input"); di.type="date"; di.value=s.opens; di.setAttribute("aria-label",NAMES[k]+": opening date"); lab.htmlFor=di.id="d-"+k;
+    di.onchange=()=>{ s.opens=di.value; dirty(); upd(); };
+    const clr=document.createElement("button"); clr.className="clr"; clr.type="button"; clr.textContent="Clear date"; clr.onclick=()=>{ s.opens=""; di.value=""; dirty(); upd(); };
+    dt.append(lab,di,clr);
+    function upd(){ const [c,t]=status(k); st.className="st "+c; st.textContent=t; clr.hidden=!s.opens; }
+    upd(); li.append(sw,nm,st,dt); ul.appendChild(li);
+  });
+}
+function dirty(){
+  const n=ORDER.filter(k=>status(k)[0]==="open").length, d=ORDER.filter(k=>status(k)[0]==="date").length;
+  $("#summary").textContent=n+" open"+(d?" · "+d+" scheduled":"")+" · "+(ORDER.length-n-d)+" off";
+  const ch=JSON.stringify(state)!==saved; $("#save").disabled=!ch;
+  if(ch){ $("#smsg").className="msg"; $("#smsg").textContent="You have unsaved changes."; }
+}
+function bulk(fn){ ORDER.forEach(k=>fn(state[k],k)); draw(); dirty(); }
+
+/* ---- actions ---- */
+$("#go").onclick=login; $("#apw").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+$("#allon").onclick=()=>bulk(s=>{s.on=true;});
+$("#alloff").onclick=()=>bulk(s=>{s.on=false;});
+$("#newclass").onclick=()=>{ if(confirm("Start a new class? This switches every lesson off and clears all dates, except Course Orientation, which stays on. Nothing changes for students until you save.")) bulk((s,k)=>{s.on=k==="ori"; s.opens="";}); };
+$("#test").onclick=async()=>{
+  const v=$("#tok").value.trim(); if(v) TOKEN=v; const m=$("#gmsg");
+  if(!TOKEN){ m.className="msg no"; m.textContent="Paste a key first."; return; }
+  m.className="msg"; m.textContent="Checking…";
+  try{ await ghGet("lessons.json"); localStorage.setItem(TOKKEY,JSON.stringify(await seal(AKEY,TOKEN))); localStorage.setItem(CONN,JSON.stringify(conn()));
+    m.className="msg ok"; m.textContent="Connected. The key is saved on this device."; ghState(); await loadSettings(); draw(); }
+  catch(e){ m.className="msg no"; m.textContent=e.message; }
+};
+$("#forget").onclick=()=>{ try{localStorage.removeItem(TOKKEY);}catch(e){} TOKEN=""; ghState(); $("#gmsg").className="msg"; $("#gmsg").textContent="Key removed from this device."; };
+$("#save").onclick=async()=>{
+  const m=$("#smsg");
+  if(!TOKEN){ m.className="msg no"; m.textContent="Add your GitHub key above first."; $("#ghpanel").scrollIntoView({behavior:"smooth"}); return; }
+  $("#save").disabled=true; m.className="msg"; m.textContent="Saving…";
+  try{ if(!shas["lessons.json"]) await ghGet("lessons.json");
+    await ghPut("lessons.json",build(),"Update lessons from PATROLscroller admin");
+    saved=JSON.stringify(state); m.className="msg ok"; m.textContent="Saved. Students will see the change within a few minutes."; }
+  catch(e){ m.className="msg no"; m.textContent=e.message; $("#save").disabled=false; }
+};
+$("#chpw").onclick=async()=>{
+  const a=$("#np1").value, b=$("#np2").value, m=$("#pmsg");
+  if(a.length<6){ m.className="msg no"; m.textContent="Use at least 6 characters."; return; }
+  if(a!==b){ m.className="msg no"; m.textContent="The two entries don’t match."; return; }
+  if(!TOKEN){ m.className="msg no"; m.textContent="Add your GitHub key above first. The new password is saved to your site."; return; }
+  m.className="msg"; m.textContent="Saving…";
+  try{
+    const salt=crypto.getRandomValues(new Uint8Array(16)), n=250000, nk=await derive(a,salt,n), sealed=await seal(nk,JSON.stringify(VDATA));
+    if(!shas["admin-vault.json"]) await ghGet("admin-vault.json");
+    await ghPut("admin-vault.json",JSON.stringify({v:1,n,s:b64(salt),i:sealed.i,c:sealed.c}),"Change PATROLscroller admin password");
+    AKEY=nk; localStorage.setItem(TOKKEY,JSON.stringify(await seal(AKEY,TOKEN)));
+    $("#np1").value=$("#np2").value=""; m.className="msg ok"; m.textContent="Password changed. Use the new one next time.";
+  }catch(e){ m.className="msg no"; m.textContent=e.message; }
+};
+$("#chsp").onclick=async()=>{
+  const a=$("#sp1").value.trim(), b=$("#sp2").value.trim(), m=$("#spmsg");
+  if(!VDATA.site){ m.className="msg no"; m.textContent="Upload the latest admin-vault.json to your site to turn this on."; return; }
+  if(a.length<4){ m.className="msg no"; m.textContent="Use at least 4 characters."; return; }
+  if(a!==b){ m.className="msg no"; m.textContent="The two entries don’t match."; return; }
+  if(!TOKEN){ m.className="msg no"; m.textContent="Add your GitHub key above first. The new password is saved to your site."; return; }
+  if(!confirm("Change the student password to \u201c"+a+"\u201d? Every student will need the new password to get back in.")) return;
+  m.className="msg"; m.textContent="Saving…";
+  try{
+    const salt=crypto.getRandomValues(new Uint8Array(16)), n=250000, k=await derive(a,salt,n);
+    const iv=crypto.getRandomValues(new Uint8Array(12)), ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},k,ub(VDATA.site));
+    if(!shas["access.json"]) await ghGet("access.json");
+    await ghPut("access.json",JSON.stringify({v:1,n,s:b64(salt),i:b64(iv),c:b64(ct)}),"Change PATROLscroller student password");
+    $("#sp1").value=$("#sp2").value=""; m.className="msg ok"; m.textContent="Student password changed to \u201c"+a+"\u201d. It works for students within a minute or two.";
+  }catch(e){ m.className="msg no"; m.textContent=e.message; }
+};
+window.addEventListener("beforeunload",e=>{ if(KEYS&&JSON.stringify(state)!==saved){ e.preventDefault(); e.returnValue=""; } });
+})();
+</script>
+</body>
+</html>
