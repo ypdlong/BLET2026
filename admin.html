@@ -120,6 +120,14 @@ ol.how{padding-left:1.2rem;margin:.5rem 0} ol.how li{margin:.25rem 0}
     </section>
 
     <section class="panel">
+      <h2>Practice test</h2>
+      <div style="display:flex;align-items:center;gap:.8rem">
+        <label class="sw"><input type="checkbox" id="ptsw" aria-label="Practice test open to students"><i></i></label>
+        <span><b id="ptlab">On</b> <span class="muted small">The 300-question practice exam in Games. When it’s off, students see it as “not open yet.” It always uses only the lessons that are open.</span></span>
+      </div>
+    </section>
+
+    <section class="panel">
       <h2>Lessons <span class="muted small count" id="summary"></span></h2>
       <p class="muted small">Switch a lesson on to open it now, or set a date for it to open by itself that morning. Students see changes a few minutes after you save.</p>
       <div class="actions">
@@ -167,6 +175,7 @@ const ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 const utf8b64=s=>{const u=enc.encode(s);let b="";for(let i=0;i<u.length;i+=0x8000)b+=String.fromCharCode(...u.subarray(i,i+0x8000));return btoa(b);};
 const b64utf8=s=>dec.decode(ub(s.replace(/\s/g,"")));
 const TOKKEY="patrolscroller-admin-token", CONN="patrolscroller-admin-repo";
+let PT=true; const snap=()=>JSON.stringify([state,PT]);
 let KEYS=null, AKEY=null, VAULT=null, VDATA=null, state={}, saved="", shas={};
 const ORDER=Object.keys(NAMES).sort((a,b)=>a==="ori"?-1:b==="ori"?1:NAMES[a].localeCompare(NAMES[b]));
 const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
@@ -210,11 +219,12 @@ async function loadSettings(){
   let cfg=null;
   if(TOKEN){ try{ cfg=JSON.parse(await ghGet("lessons.json")); }catch(e){ $("#gmsg").className="msg no"; $("#gmsg").textContent=e.message; } }
   if(!cfg){ try{ cfg=await (await fetch("lessons.json?t="+Date.now(),{cache:"no-store"})).json(); }catch(e){ cfg={lessons:{}}; } }
+  PT=cfg.practiceTest!==false; drawPT();
   state={}; ORDER.forEach(k=>{ const s=(cfg.lessons||{})[k]||{}; state[k]={on:!!(s.on&&s.k),opens:s.opens||""}; });
-  saved=JSON.stringify(state); dirty();
+  saved=snap(); dirty();
 }
 function build(){
-  const out={v:1,updated:new Date().toISOString(),lessons:{}};
+  const out={v:1,updated:new Date().toISOString(),practiceTest:PT,lessons:{}};
   ORDER.forEach(k=>{ const s=state[k]; out.lessons[k]=s.on?{on:true,k:KEYS[k]}:s.opens?{opens:s.opens,k:KEYS[k]}:{}; });
   return JSON.stringify(out,null,1);
 }
@@ -239,13 +249,15 @@ function draw(){
 function dirty(){
   const n=ORDER.filter(k=>status(k)[0]==="open").length, d=ORDER.filter(k=>status(k)[0]==="date").length;
   $("#summary").textContent=n+" open"+(d?" · "+d+" scheduled":"")+" · "+(ORDER.length-n-d)+" off";
-  const ch=JSON.stringify(state)!==saved; $("#save").disabled=!ch;
+  const ch=snap()!==saved; $("#save").disabled=!ch;
   if(ch){ $("#smsg").className="msg"; $("#smsg").textContent="You have unsaved changes."; }
 }
 function bulk(fn){ ORDER.forEach(k=>fn(state[k],k)); draw(); dirty(); }
 
 /* ---- actions ---- */
 $("#go").onclick=login; $("#apw").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+function drawPT(){ $("#ptsw").checked=PT; $("#ptlab").textContent=PT?"On":"Off"; }
+$("#ptsw").onchange=()=>{ PT=$("#ptsw").checked; drawPT(); dirty(); };
 $("#allon").onclick=()=>bulk(s=>{s.on=true;});
 $("#alloff").onclick=()=>bulk(s=>{s.on=false;});
 $("#newclass").onclick=()=>{ if(confirm("Start a new class? This switches every lesson off and clears all dates, except Course Orientation, which stays on. Nothing changes for students until you save.")) bulk((s,k)=>{s.on=k==="ori"; s.opens="";}); };
@@ -264,7 +276,7 @@ $("#save").onclick=async()=>{
   $("#save").disabled=true; m.className="msg"; m.textContent="Saving…";
   try{ if(!shas["lessons.json"]) await ghGet("lessons.json");
     await ghPut("lessons.json",build(),"Update lessons from PATROLscroller admin");
-    saved=JSON.stringify(state); m.className="msg ok"; m.textContent="Saved. Students will see the change within a few minutes."; }
+    saved=snap(); m.className="msg ok"; m.textContent="Saved. Students will see the change within a few minutes."; }
   catch(e){ m.className="msg no"; m.textContent=e.message; $("#save").disabled=false; }
 };
 $("#chpw").onclick=async()=>{
@@ -297,7 +309,7 @@ $("#chsp").onclick=async()=>{
     $("#sp1").value=$("#sp2").value=""; m.className="msg ok"; m.textContent="Student password changed to \u201c"+a+"\u201d. It works for students within a minute or two.";
   }catch(e){ m.className="msg no"; m.textContent=e.message; }
 };
-window.addEventListener("beforeunload",e=>{ if(KEYS&&JSON.stringify(state)!==saved){ e.preventDefault(); e.returnValue=""; } });
+window.addEventListener("beforeunload",e=>{ if(KEYS&&snap()!==saved){ e.preventDefault(); e.returnValue=""; } });
 })();
 </script>
 </body>
