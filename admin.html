@@ -128,6 +128,13 @@ ol.how{padding-left:1.2rem;margin:.5rem 0} ol.how li{margin:.25rem 0}
     </section>
 
     <section class="panel">
+      <h2>Student progress</h2>
+      <p class="muted small">Clears every student’s answers, progress, missed questions, best game score and any practice test in progress. Saved cards are kept. Each student sees “Your instructor has reset all progress” the next time they open the app.</p>
+      <div class="actions"><button class="btn" id="resetp">Reset student progress</button></div>
+      <p class="msg" id="rsmsg" role="status"></p>
+    </section>
+
+    <section class="panel">
       <h2>Lessons <span class="muted small count" id="summary"></span></h2>
       <p class="muted small">Switch a lesson on to open it now, or set a date for it to open by itself that morning. Students see changes a few minutes after you save.</p>
       <div class="actions">
@@ -175,7 +182,7 @@ const ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 const utf8b64=s=>{const u=enc.encode(s);let b="";for(let i=0;i<u.length;i+=0x8000)b+=String.fromCharCode(...u.subarray(i,i+0x8000));return btoa(b);};
 const b64utf8=s=>dec.decode(ub(s.replace(/\s/g,"")));
 const TOKKEY="patrolscroller-admin-token", CONN="patrolscroller-admin-repo";
-let PT=true; const snap=()=>JSON.stringify([state,PT]);
+let PT=true, RESET={progress:0,full:0}, RESET0=""; const snap=()=>JSON.stringify([state,PT,RESET]);
 let KEYS=null, AKEY=null, VAULT=null, VDATA=null, state={}, saved="", shas={};
 const ORDER=Object.keys(NAMES).sort((a,b)=>a==="ori"?-1:b==="ori"?1:NAMES[a].localeCompare(NAMES[b]));
 const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
@@ -220,11 +227,12 @@ async function loadSettings(){
   if(TOKEN){ try{ cfg=JSON.parse(await ghGet("lessons.json")); }catch(e){ $("#gmsg").className="msg no"; $("#gmsg").textContent=e.message; } }
   if(!cfg){ try{ cfg=await (await fetch("lessons.json?t="+Date.now(),{cache:"no-store"})).json(); }catch(e){ cfg={lessons:{}}; } }
   PT=cfg.practiceTest!==false; drawPT();
+  RESET={progress:+((cfg.reset||{}).progress)||0, full:+((cfg.reset||{}).full)||0}; RESET0=JSON.stringify(RESET); drawReset();
   state={}; ORDER.forEach(k=>{ const s=(cfg.lessons||{})[k]||{}; state[k]={on:!!(s.on&&s.k),opens:s.opens||""}; });
   saved=snap(); dirty();
 }
 function build(){
-  const out={v:1,updated:new Date().toISOString(),practiceTest:PT,lessons:{}};
+  const out={v:1,updated:new Date().toISOString(),practiceTest:PT,reset:RESET,lessons:{}};
   ORDER.forEach(k=>{ const s=state[k]; out.lessons[k]=s.on?{on:true,k:KEYS[k]}:s.opens?{opens:s.opens,k:KEYS[k]}:{}; });
   return JSON.stringify(out,null,1);
 }
@@ -258,9 +266,12 @@ function bulk(fn){ ORDER.forEach(k=>fn(state[k],k)); draw(); dirty(); }
 $("#go").onclick=login; $("#apw").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
 function drawPT(){ $("#ptsw").checked=PT; $("#ptlab").textContent=PT?"On":"Off"; }
 $("#ptsw").onchange=()=>{ PT=$("#ptsw").checked; drawPT(); dirty(); };
+function drawReset(){ const m=$("#rsmsg"); if(!m) return; const ch=JSON.stringify(RESET)!==RESET0;
+  m.className="msg"+(ch?"":" muted"); m.textContent=ch?("Pending: "+(RESET.full>JSON.parse(RESET0||"{}").full?"a full reset (Start new class)":"a progress reset")+" will go out when you save."):(RESET.progress||RESET.full?"Last reset: "+new Date(Math.max(RESET.progress,RESET.full)).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"No resets yet."); }
+$("#resetp").onclick=()=>{ if(confirm("Reset every student’s progress? Their answers, progress and practice tests will be cleared the next time they open the app. Saved cards are kept. This can’t be undone. Nothing changes until you save.")){ RESET.progress=Date.now(); drawReset(); dirty(); } };
 $("#allon").onclick=()=>bulk(s=>{s.on=true;});
 $("#alloff").onclick=()=>bulk(s=>{s.on=false;});
-$("#newclass").onclick=()=>{ if(confirm("Start a new class? This switches every lesson off and clears all dates, except Course Orientation, which stays on. Nothing changes for students until you save.")) bulk((s,k)=>{s.on=k==="ori"; s.opens="";}); };
+$("#newclass").onclick=()=>{ if(confirm("Start a new class? This switches every lesson off and clears all dates (Course Orientation stays on), and erases every student’s progress and saved cards the next time they open the app. Nothing changes for students until you save.")) RESET.full=Date.now(); drawReset(); bulk((s,k)=>{s.on=k==="ori"; s.opens="";}); };
 $("#test").onclick=async()=>{
   const v=$("#tok").value.trim(); if(v) TOKEN=v; const m=$("#gmsg");
   if(!TOKEN){ m.className="msg no"; m.textContent="Paste a key first."; return; }
@@ -276,7 +287,7 @@ $("#save").onclick=async()=>{
   $("#save").disabled=true; m.className="msg"; m.textContent="Saving…";
   try{ if(!shas["lessons.json"]) await ghGet("lessons.json");
     await ghPut("lessons.json",build(),"Update lessons from PATROLscroller admin");
-    saved=snap(); m.className="msg ok"; m.textContent="Saved. Students will see the change within a few minutes."; }
+    saved=snap(); RESET0=JSON.stringify(RESET); drawReset(); m.className="msg ok"; m.textContent="Saved. Students will see the change within a few minutes."; }
   catch(e){ m.className="msg no"; m.textContent=e.message; $("#save").disabled=false; }
 };
 $("#chpw").onclick=async()=>{
