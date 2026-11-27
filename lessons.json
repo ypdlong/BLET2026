@@ -1,14 +1,18 @@
 {
  "v": 1,
- "updated": "2026-11-25T08:23:07.114Z",
+ "updated": "2026-11-27T20:44:27.823Z",
  "practiceTest": false,
+ "reset": {
+  "progress": 0,
+  "full": 0
+ },
  "lessons": {
   "ori": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "rssPHCz0iWF8smhZv99RX9CcOPYuW3KhMcLBt3p48Ao="
   },
   "assc": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "h8xYQf0BAJnHLj+e60v7CxPCkELsE0vp3Lb8xIQTqms="
   },
   "cp": {
@@ -16,143 +20,143 @@
    "k": "O4/Mh++YbmdJRWv4OdQbrwBRredzEaWhk3T6TD2zelw="
   },
   "cde": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "HRClCk8ymJphfahCGXVHHGfxLlbh+c3DWeKzWxSyh1I="
   },
   "cct": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "+0UIrN+DuSIj1CssTKGBLlPNdyDOrMsFVDRFOJEAgpM="
   },
   "cs": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "5iIQhqKl7Ckbxd+zmccugiNDS/zEgy1muH4Ydz0Iyb8="
   },
   "crt": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "+VQ2KraVsNMnK6cycY2xHM6T/0jrZGaJ0uNT0nIi+CI="
   },
   "crp": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "OwHUqiwFRPVLLZEN7QMUbmkAH1GE9O2fwLXIayWNPSM="
   },
   "cap": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "b9a072f/D6UE5fVHaiOOk1faKaHhGS73IxYxTbwvqMA="
   },
   "ci": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "TGzlalr3Xd0ZEWxdkATUVgml+9KvgZqlirbAzSbProw="
   },
   "cri": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "4By09xdr8ZvCPjDmYTgaZMnIzYm9W2KaqDjlJZSSesc="
   },
   "crw": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "uHJySwQNEF3i9mcBF5QlyrXih1OFMjsw8f7AAk39PrM="
   },
   "dp": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "okaFHc0t91GMZwO0KE/MAmASUymJvwxpVMaNhD81X9E="
   },
   "dv": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "HVcoUcw2Mg6IoAI3QxOyreKfxmOlqXTEMdoSkbIxUcY="
   },
   "eps": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "Uod0yehoSva82RXBNw5ZDgTJKD9sxjqGLyWB0LEuJL0="
   },
   "exp": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "nN5A8QG3URBgJYRVDIulpQVIO+bdFKuz1zB6GXoNvF8="
   },
   "fn": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "NKmEqhxMI6RxznHjVNhkdrjndKJiOOsnoDQgUp98vOI="
   },
   "fa": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "bDIyGSLzTe4sEkIxgZ3FWfxJkoOGdBxzG4BkdbdGHaM="
   },
   "fr": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "AkA4cTB+PWkiFd5878FY65/2jKqbRr+R19OClJaOd3Q="
   },
   "hc": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "BAbZWB5r0tJIyPB1NnO1XiDCpja5QgCqTAoYk3ebw90="
   },
   "hs": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "WRJAqqxHsOLUV3BqjPBjJc8yD02LIXzOPzo0P+d10IE="
   },
   "ht": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "e+lWtZ79ag2sdf8kL/HzaEkPQLCnu9sN9yRPTYsT39s="
   },
   "ii": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "WfB/5Y2+zmdHVmGktMGKfjjjCG+wSCP8iB2QIjP1Klk="
   },
   "jv": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "1BVtVvbPyt7VYPJNgM0uEwbX3Okl2N7N/EwjScGUNnU="
   },
   "dr": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "mdqNdRZ+8G3T1D9c1RCqEZNjYnbc+k1ckcs3R/FpCkM="
   },
   "mp": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "zqOvxwp42JLetO82W9FhUWVxSbNJ6K3KE/ulCDAHZtU="
   },
   "mvl": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "rexwnB7p4LCCI6W58+zkVZk30kdmQOomlmLLM+0SuyI="
   },
   "ohw": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "sXZ8lJRZA09OIqOglYJ+YJvEdVJB6PpxxpIi77lScSY="
   },
   "pt": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "2nQ4OBJ6htCUXdVBt0YriZvXFlwCDWyhwmmkOaAj7O0="
   },
   "pc": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "6mMAdsp1e68uFtgcRaRAsKi7ZfEBnSUtE0TooY57Uwk="
   },
   "prc": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "DoqXLJKYvttBGDm+ozrUry5Q1ru/Lf+hLL5cm+AZI4k="
   },
   "rd": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "bL/ntyV3Hd0W33ZpJV1Zj7btwSYmVqq5Pxjwv9BPBTQ="
   },
   "rcv": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "Y79gTBOlNwZwnncw5gOWCXEXBOg8H/aho3+f5LdYssU="
   },
   "sa": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "1IEjocrUGRU2nozx1htzH+J6n/DitgxaSQjeFbt64Bc="
   },
   "tc": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "0yIaWBBRXl9gtzFZBMb/fcBjQxJnx/9LBUherANksvQ="
   },
   "tci": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "lm6JjLovhgav0aWD0eau4pZ0lb0wELicYMDMzCN+vlQ="
   },
   "tle": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "cLgY+2pMb3tDio0K2Zc6ite3yV7rtL1uZu9/ZVSBw98="
   },
   "tp": {
-   "opens": "2026-11-26",
+   "on": true,
    "k": "N7qkoHEgiJmPB036woCAfsuNocOT4ZUur33CD67z7jU="
   }
  }
